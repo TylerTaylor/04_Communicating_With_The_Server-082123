@@ -51,7 +51,7 @@ fetch(url)
 
 fetch(url)
   .then(response => {
-    //retrives the data from our response
+    //retrieves the data from our response
     return response.json()
   })
   .then(data => console.log(data))

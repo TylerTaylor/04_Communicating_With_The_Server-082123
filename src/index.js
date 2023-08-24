@@ -13,12 +13,42 @@ function blurb(book) {
   return `${title} by ${author} is on sale for $${price}`
 }
 
+
+// GET all books
+const baseUrl = "http://localhost:3000/books/"
+
+fetch(baseUrl)
+  .then(response => {
+    console.log('step 1', response)
+    return response.json()
+  })
+  .then(books => {
+    // console.log('step 2', books)
+
+    // this loop is reading from data.js
+    // bookStore.inventory.forEach(book => renderBook(book))
+
+    // THIS loop is reading from db.json (the server)
+    books.forEach(book => renderBook(book))
+  })
+
+// GET one store
+fetch('http://localhost:3000/stores/3')
+  .then(response => response.json())
+  .then(store => {
+    console.log(store)
+
+    renderHeader(store)
+    renderFooter(store)
+  })
+  .catch(e => console.error(e))
+
 ////////////////////////////////
 //     Rendering Functions    //
 ////////////////////////////////
 
-renderHeader(bookStore)
-renderFooter(bookStore)
+// renderHeader(bookStore)
+// renderFooter(bookStore)
 
 function renderHeader(bookStore) {
   document.getElementById('bookstore-name').textContent = bookStore.name
@@ -67,7 +97,7 @@ function renderBook(book) {
   document.getElementById('book-list').append(li)
 }
 
-bookStore.inventory.forEach(book => renderBook(book))
+// bookStore.inventory.forEach(book => renderBook(book))
 
 ////////////////////////////////
 // Event listeners / handlers //
@@ -115,3 +145,53 @@ bookForm.addEventListener('submit', (e) => {
   handleToggleForm()
   e.target.reset()
 })
+
+
+
+
+
+// fetch('https://api.sampleapis.com/beers/ale')
+//   .then(res => res.json())
+//   .then(ales => {
+//     ales.forEach(ale => renderAle(ale))
+//   })
+
+
+//   function renderAle(ale) {
+
+//     // id
+//     // image
+//     // name
+//     // price
+//     console.log(ale.price)
+//     const li = document.createElement('li');
+//     li.className = 'list-li';
+  
+//     const h3 = document.createElement('h3');
+//     h3.textContent = ale.name;
+//     li.append(h3)
+  
+//     const price = document.createElement('p');
+//     price.textContent = ale.price;
+//     li.append(price)
+  
+//     const img = document.createElement('img');
+//     img.src = ale.image;
+//     img.alt = `${ale.name} cover`;
+//     img.title = `${ale.name} cover`;
+//     li.append(img)
+  
+//     const button = document.createElement('button');
+//     button.textContent = 'Delete';
+  
+//     // add event listener to delete a ale
+//     button.addEventListener('click', (e) => {
+//       console.log(e.target)
+//       // e.target.parentElement.remove()
+//       li.remove()
+//     })
+  
+//     li.append(button);
+  
+//     document.getElementById('book-list').append(li)
+//   }
